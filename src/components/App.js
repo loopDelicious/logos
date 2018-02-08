@@ -1,17 +1,29 @@
 import React, { Component } from 'react';
 import '../css/App.css';
-import data from '../logos.json';
+// import data from '../logos.json';
 import Grid from 'react-css-grid'
 
 class App extends Component {
 
     state = {
-        data: data.customers // array of customer objects
+        customers: []
+    };
+
+    componentDidMount() {
+        fetch('https://8bf5a572-4c03-4396-9b29-2aea34ff338f.mock.pstmn.io/logos')
+            .then((results) =>  {
+            return results.json();
+            }).then((data) => {
+            this.setState({
+                customers: data.customers
+            })
+        })
+
     };
 
     render() {
 
-        let customers = this.state.data.map( (customer) => {
+        let customers = this.state.customers.map( (customer) => {
             return (
                 <div key={customer.name}>
                     <img src={customer.image} alt={customer.name} className="img-responsive" />
@@ -24,7 +36,9 @@ class App extends Component {
               <Grid
                   width={320}
                   gap={24}>
+
                     {customers}
+
               </Grid>
           </div>
         );

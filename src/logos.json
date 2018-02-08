@@ -1,0 +1,28 @@
+{
+  "customers": [
+    {
+      "name": "Sikka",
+      "image": "https://i.imgur.com/p0YkXD7.jpg"
+    },
+    {
+      "name": "Mikka",
+      "image": "https://i.imgur.com/p0YkXD7.jpg"
+    },
+    {
+      "name": "Pikka",
+      "image": "https://i.imgur.com/p0YkXD7.jpg"
+    },
+    {
+      "name": "Likka",
+      "image": "https://i.imgur.com/p0YkXD7.jpg"
+    },
+    {
+      "name": "Wikka",
+      "image": "https://i.imgur.com/p0YkXD7.jpg"
+    },
+    {
+      "name": "Bikka",
+      "image": "https://i.imgur.com/p0YkXD7.jpg"
+    }
+  ]
+}

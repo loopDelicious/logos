@@ -1,21 +1,37 @@
 import React, { Component } from 'react';
-import logo from '../img/logo.svg';
 import '../css/App.css';
+import data from '../logos.json';
 
 class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
-    );
-  }
+
+    state = {
+        data: data.customers // array of customer objects
+    };
+
+    render() {
+
+        let customers = this.state.data.map( (customer) => {
+            return (
+                <tr key={customer.name}>
+                    <td>
+                        <img src={customer.image} alt={customer.name} className="img-responsive" />
+                    </td>
+                </tr>
+            )
+        });
+
+        return (
+          <div className="App">
+              <table>
+                  <tbody>
+
+                    {customers}
+
+                  </tbody>
+              </table>
+          </div>
+        );
+    }
 }
 
 export default App;

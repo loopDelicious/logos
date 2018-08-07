@@ -23,11 +23,10 @@ class App extends Component {
     //     })
     //
     // };
-    //
-    // };
 
     render() {
 
+        // // if using mock response data
         // let customers = this.state.customers.map( (customer) => {
         //     return (
         //         <div key={customer.name}>
@@ -36,15 +35,17 @@ class App extends Component {
         //     )
         // });
 
+        // if using local json file
         let customers = logos.map( (logo) => {
+
             let thumbnailStyle = {
                 backgroundImage: `url(${logo.FIELD3})`
             };
 
             return (
                 <div key={logo.FIELD1}>
-                    <div className="thumbnail" style={ thumbnailStyle }></div>
-                    {/*<img src={logo.FIELD3} alt={logo.FIELD2} className="img-responsive" />*/}
+                    {/*<div className="thumbnail" style={ thumbnailStyle }></div>*/}
+                    <img src={logo.FIELD3} alt={logo.FIELD2} className="img-responsive imageStyle" />
                 </div>
             )
         });

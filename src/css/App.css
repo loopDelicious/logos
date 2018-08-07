@@ -9,13 +9,14 @@
 }
 
 .box {
-    background: whitesmoke;
+    /*background: whitesmoke;*/
     display: block;
     height: 100%;
-    width: 100%;
+    width: 80%;
     position: absolute;
     /*overflow: hidden;*/
-    margin: 10px -400px;
+    /*margin: 10px -400px;*/
+    margin: auto;
     -webkit-animation-name: scroll;
     -webkit-animation-duration: 30s;
     -webkit-animation-iteration-count: infinite;
@@ -34,5 +35,14 @@
     100% {
         margin-left: 100%;
     }
+
+}
+
+.imageStyle {
+    text-align: center;
+    width: 200px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 
 }

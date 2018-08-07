@@ -43,7 +43,7 @@ class App extends Component {
             };
 
             return (
-                <div key={logo.FIELD1}>
+                <div key={logo.FIELD1} className="wrapper">
                     {/*<div className="thumbnail" style={ thumbnailStyle }></div>*/}
                     <img src={logo.FIELD3} alt={logo.FIELD2} className="img-responsive imageStyle" />
                 </div>

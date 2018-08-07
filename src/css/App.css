@@ -1,8 +1,8 @@
 .App {
-    background: whitesmoke;
+    /*background: whitesmoke;*/
     height: 100%;
     width: 100%;
-    border: 1px solid whitesmoke;
+    /*border: 1px solid whitesmoke;*/
     margin: 25px auto;
     overflow: hidden;
     /*position: relative;*/
@@ -13,7 +13,7 @@
     display: block;
     height: 100%;
     width: 80%;
-    position: absolute;
+    /*position: absolute;*/
     /*overflow: hidden;*/
     /*margin: 10px -400px;*/
     margin: auto;
@@ -38,11 +38,13 @@
 
 }
 
+.wrapper {
+    margin: auto;
+}
+
 .imageStyle {
-    text-align: center;
     width: 200px;
     display: block;
-    margin-left: auto;
-    margin-right: auto;
+    margin: auto;
 
 }

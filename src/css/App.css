@@ -1,24 +1,38 @@
 .App {
-  text-align: center;
+    background: whitesmoke;
+    height: 100%;
+    width: 100%;
+    border: 1px solid whitesmoke;
+    margin: 25px auto;
+    overflow: hidden;
+    /*position: relative;*/
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+.box {
+    background: whitesmoke;
+    display: block;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    /*overflow: hidden;*/
+    margin: 10px -400px;
+    -webkit-animation-name: scroll;
+    -webkit-animation-duration: 30s;
+    -webkit-animation-iteration-count: infinite;
+    /*-webkit-animation-direction: alternate;*/
+    -webkit-animation-timing-function: linear;
 }
 
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
+.box:hover {
+    -webkit-animation-play-state: paused;
 }
 
-.App-intro {
-  font-size: large;
-}
+@-webkit-keyframes move {
+    0% {
+        margin-left: 0px;
+    }
+    100% {
+        margin-left: 100%;
+    }
 
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
 }

@@ -3,17 +3,16 @@ import '../css/App.css';
 import Grid from 'react-css-grid';
 import secret from '../secrets.js';
 
-// data sources
+// local data sources
 // import data from '../logos.json';
-import logos from '../team_logos.json';
+// import logos from '../team_logos.json';
 // import csv from 'csvtojson';
 
 
 class App extends Component {
 
     state = {
-        customers: [],
-        logos: []
+        customers: []
     };
 
     componentDidMount() {
@@ -42,7 +41,7 @@ class App extends Component {
         }).then( (json) => {
             this.setState({
                 customers: json.customers
-            })
+            });
         });
 
         // // for pagination
@@ -113,13 +112,17 @@ class App extends Component {
         // });
 
         let customers = this.state.customers.map( (customer) => {
+
             let thumbnailStyle = {
                backgroundImage: `url(${customer.display_name})`
             };
 
+            let logoUrl = `https://logo.clearbit.com/${customer.email.split("@")[1]}`;
+
             return (
                 <div key={customer.oid} className="wrapper">
-                    <img className="img-responsive imageStyle" style={ thumbnailStyle } src={customer.display_image} alt={customer.display_name} />
+                    <img src={ logoUrl } alt={customer.display_name} onError={(e)=>{e.target.src="https://upload.wikimedia.org/wikipedia/commons/c/ce/Example_image.png"}} className="img-responsive imageStyle" style={ thumbnailStyle } />
+                    {/*<img src={customer.display_image} alt={customer.display_name} className="img-responsive imageStyle" style={ thumbnailStyle } />*/}
                     {/*<img src={customer.display_image} alt={customer.display_name} className="img-responsive imageStyle"/>*/}
                 </div>
             )
@@ -129,11 +132,7 @@ class App extends Component {
         return (
           <div className="App">
               <div className="box">
-                  <Grid
-                      width={320}
-                      gap={24}>
-                      {this.state.customers ? <div>{customers}</div> : null}
-                  </Grid>
+                  { this.state.customers ? <div className="inner-box">{customers}</div> : null }
               </div>
           </div>
         );

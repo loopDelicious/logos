@@ -10,13 +10,11 @@
 
 .box {
     /*background: whitesmoke;*/
-    display: block;
     height: 100%;
-    width: 80%;
+    width: 500px;
     /*position: absolute;*/
     /*overflow: hidden;*/
     /*margin: 10px -400px;*/
-    margin: auto;
     -webkit-animation-name: scroll;
     -webkit-animation-duration: 30s;
     -webkit-animation-iteration-count: infinite;
@@ -37,14 +35,24 @@
     }
 
 }
+.inner-box {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-flow: row wrap;
+    width: 1200px;
+    /*overflow: auto;*/
+}
 
 .wrapper {
-    margin: auto;
+
 }
 
 .imageStyle {
-    width: 200px;
-    display: block;
-    margin: auto;
+    width: 150px;
+    margin: 10px;
+}
+
+.imageStyle:hover {
 
 }

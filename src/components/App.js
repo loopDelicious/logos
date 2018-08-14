@@ -29,7 +29,7 @@ class App extends Component {
 
         const stripe_source_id = "3ULj4Re5w1wg3k";
 
-        fetch(`https://api.baremetrics.com/v1/${stripe_source_id}/customers?per_page=200`, {
+        fetch(`https://api.baremetrics.com/v1/${stripe_source_id}/customers?sort=ltv&order=desc&per_page=200`, {
             headers: {
                 "Authorization": `Bearer ${secret.baremetrics}`,
                 "Content-Type": 'application/json',
@@ -117,15 +117,24 @@ class App extends Component {
                backgroundImage: `url(${customer.display_name})`
             };
 
-            let logoUrl = `https://logo.clearbit.com/${customer.email.split("@")[1]}`;
+            let domain = customer.email.split("@")[1];
+            let domainsToExclude = ["gmail.com", "qq.com", "163.com"];
 
-            return (
-                <div key={customer.oid} className="wrapper">
-                    <img src={ logoUrl } alt={customer.display_name} onError={(e)=>{e.target.src="https://upload.wikimedia.org/wikipedia/commons/c/ce/Example_image.png"}} className="img-responsive imageStyle" style={ thumbnailStyle } />
-                    {/*<img src={customer.display_image} alt={customer.display_name} className="img-responsive imageStyle" style={ thumbnailStyle } />*/}
-                    {/*<img src={customer.display_image} alt={customer.display_name} className="img-responsive imageStyle"/>*/}
-                </div>
-            )
+            if (!domainsToExclude.includes(domain)) {
+
+                let logoUrl = `https://logo.clearbit.com/${domain}`;
+                // console.log(customer);
+                let displayName = customer.display_name.includes("(") ? customer.name.split("(")[1].slice(0,-1) : customer.display_name;
+
+                return (
+                    <div key={customer.oid} className="wrapper">
+                        <img src={ logoUrl } alt={ displayName } onError={(e) => {e.target.className = "hidden"}} className="img-responsive imageStyle" style={ thumbnailStyle }/>
+                        <p className="imgDescription">{ displayName }</p>
+                        {/*<img src={customer.display_image} alt={customer.display_name} className="img-responsive imageStyle" style={ thumbnailStyle } />*/}
+                        {/*<img src={customer.display_image} alt={customer.display_name} className="img-responsive imageStyle"/>*/}
+                    </div>
+                )
+            }
 
         });
 

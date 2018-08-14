@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import '../css/App.css';
-import Grid from 'react-css-grid';
+// import Grid from 'react-css-grid';
 import secret from '../secrets.js';
 
 // local data sources

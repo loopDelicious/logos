@@ -60,21 +60,28 @@
 
 .imgDescription {
     position: absolute;
-    background: rgba(169, 169, 169, 0.72);
+    background: rgb(239, 91, 37);
     color: #fff;
     visibility: hidden;
-    opacity: .5;
+    /*opacity: .5;*/
 
     /* transition effect. not necessary */
     transition: opacity .2s, visibility .2s;
 }
 
+.wrapper:hover .imageStyle {
+    filter: brightness(50%);
+    /*opacity: 0.7;*/
+}
+
 .wrapper:hover .imgDescription {
     visibility: visible;
-    opacity: 0;
-    color: black;
+    /*opacity: .5;*/
+    color: white;
+    background-color: #ef5b25;
     font-size: 20px;
     font-weight: bolder;
+    padding: 10px;
 }
 
 .hidden {

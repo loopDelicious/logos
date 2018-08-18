@@ -16,51 +16,30 @@ class App extends Component {
         more: true
     };
 
-    // getAllLogos = () => {
-
-        // while (true) {
-        //     let pageResults = this.getPage(page);
-        //     console.log(pageResults);
-        //     aggregateResults = aggregateResults.concat(pageResults.customers); 
-        //     if (pageResults.meta.pagination.has_more) {
-        //         page = pageResults.meta.pagination.page++;
-        //         console.log(page);
-        //     } else {
-        //         break;
-        //     }
-        //     return aggregateResults;
-        // }
-    aggregateResults = [];
     getAllLogos = async () => {
         let pageIndex = 0;
         while (true) {
             let pageResults = await this.getPage(pageIndex);
-            console.log(pageResults);
-            console.log(pageResults.customers);
-            this.aggregateResults = this.aggregateResults.concat(pageResults.customers); 
-            if (pageResults.meta.pagination.has_more) {
+            if (pageResults && pageResults.meta.pagination.has_more) {
                 pageIndex++;
-                console.log(pageIndex);
             } else {
-                console.log('no more pages');
                 break;
             }
         }
-        return this.aggregateResults;
-   
-        // let pageResults = this.getpage(pageIndex);
-        // if (pageResults.meta.pagination.has_more) {
-        //     return aggregateResults.concat(this.getAllLogos(pageResults.meta.pagination.page++));
-        // } else {
-        //     return pageResults.customers;
-        // }
     }  
+
+    handleErrors = (response) => {
+        if (!response.ok) {
+            throw Error(response.statusText);
+        }
+        return response;
+    }
 
     getPage = async (page) => {
         
         const stripe_source_id = "3ULj4Re5w1wg3k";
         let url = `https://api.baremetrics.com/v1/${stripe_source_id}/customers?sort=ltv&order=desc&per_page=200&page=${page}`;
-        // console.log(url);
+        console.log(url);
         let pageResults = await fetch(url, {
                 headers: {
                     "Authorization": `Bearer ${secret.baremetrics}`,
@@ -68,17 +47,24 @@ class App extends Component {
                     "Accept": 'application/json',
                 },
                 credentials: 'same-origin'
-            }).then(function(response) {
-                console.log(response);
+            })
+            .then(this.handleErrors)
+            .then(function(response) {
                 return response.json();
-            }).then((data) => {
-                console.log(data);
+            })
+            .then((data) => {
+                this.setState({
+                    customers: data.customers ? this.state.customers.concat(data.customers) : this.state.customers
+                })                
                 return data;
             })
+            .catch(error => console.log(error));
         return pageResults;
     }
 
     componentDidMount() {
+
+        this.getAllLogos();
 
         // // load data from mock response
         // fetch('https://8bf5a572-4c03-4396-9b29-2aea34ff338f.mock.pstmn.io/logos')
@@ -89,13 +75,6 @@ class App extends Component {
         //         customers: data.customers
         //     })
         // })
-
-        this.getAllLogos( (aggregateResults) => {
-            console.log(aggregateResults);
-            this.setState({
-                customers: aggregateResults
-            });
-        });
     };
 
     render() {
@@ -131,7 +110,7 @@ class App extends Component {
             };
 
             let domain = customer.email.split("@")[1];
-            let domainsToExclude = ["gmail.com", "qq.com", "163.com"];
+            let domainsToExclude = ["gmail.com", "googlemail.com", "qq.com", "163.com", "hotmail.com"];
 
             if (!domainsToExclude.includes(domain)) {
 

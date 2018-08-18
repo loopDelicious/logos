@@ -12,8 +12,71 @@ import secret from '../secrets.js';
 class App extends Component {
 
     state = {
-        customers: []
+        customers: [],
+        more: true
     };
+
+    // getAllLogos = () => {
+
+        // while (true) {
+        //     let pageResults = this.getPage(page);
+        //     console.log(pageResults);
+        //     aggregateResults = aggregateResults.concat(pageResults.customers); 
+        //     if (pageResults.meta.pagination.has_more) {
+        //         page = pageResults.meta.pagination.page++;
+        //         console.log(page);
+        //     } else {
+        //         break;
+        //     }
+        //     return aggregateResults;
+        // }
+    aggregateResults = [];
+    getAllLogos = async () => {
+        let pageIndex = 0;
+        while (true) {
+            let pageResults = await this.getPage(pageIndex);
+            console.log(pageResults);
+            console.log(pageResults.customers);
+            this.aggregateResults = this.aggregateResults.concat(pageResults.customers); 
+            if (pageResults.meta.pagination.has_more) {
+                pageIndex++;
+                console.log(pageIndex);
+            } else {
+                console.log('no more pages');
+                break;
+            }
+        }
+        return this.aggregateResults;
+   
+        // let pageResults = this.getpage(pageIndex);
+        // if (pageResults.meta.pagination.has_more) {
+        //     return aggregateResults.concat(this.getAllLogos(pageResults.meta.pagination.page++));
+        // } else {
+        //     return pageResults.customers;
+        // }
+    }  
+
+    getPage = async (page) => {
+        
+        const stripe_source_id = "3ULj4Re5w1wg3k";
+        let url = `https://api.baremetrics.com/v1/${stripe_source_id}/customers?sort=ltv&order=desc&per_page=200&page=${page}`;
+        // console.log(url);
+        let pageResults = await fetch(url, {
+                headers: {
+                    "Authorization": `Bearer ${secret.baremetrics}`,
+                    "Content-Type": 'application/json',
+                    "Accept": 'application/json',
+                },
+                credentials: 'same-origin'
+            }).then(function(response) {
+                console.log(response);
+                return response.json();
+            }).then((data) => {
+                console.log(data);
+                return data;
+            })
+        return pageResults;
+    }
 
     componentDidMount() {
 
@@ -27,62 +90,12 @@ class App extends Component {
         //     })
         // })
 
-        const stripe_source_id = "3ULj4Re5w1wg3k";
-
-        fetch(`https://api.baremetrics.com/v1/${stripe_source_id}/customers?sort=ltv&order=desc&per_page=200`, {
-            headers: {
-                "Authorization": `Bearer ${secret.baremetrics}`,
-                "Content-Type": 'application/json',
-                "Accept": 'application/json',
-            },
-            credentials: 'same-origin'
-        }).then(function(response) {
-            return response.json();
-        }).then( (json) => {
+        this.getAllLogos( (aggregateResults) => {
+            console.log(aggregateResults);
             this.setState({
-                customers: json.customers
+                customers: aggregateResults
             });
         });
-
-        // // for pagination
-        // function getCustomers(progress,
-        //     url = `https://api.baremetrics.com/v1/${stripe_source_id}/customers?per_page=200`,
-        //     options = {
-        //         headers: {
-        //             "Authorization": `Bearer ${secret.baremetrics}`
-        //         },
-        //         credentials: 'same-origin'
-        //     },
-        //     customers = []) {
-        //     return new Promise((resolve, reject) => fetch(url, options)
-        //         .then(response => {
-        //             if (response.status !== 200)  {
-        //                 throw `${response.status}: ${response.statusText}`;
-        //             }
-        //             response.json().then(data => {
-        //                 customers = customers.concat(data.customers);
-        //
-        //                 if(data.next) {
-        //                     progress && progress(customers);
-        //                     getCustomers(progress, data.next, customers).then(resolve).catch(reject)
-        //                 } else {
-        //                     resolve(customers);
-        //                 }
-        //             }).catch(reject);
-        //         }).catch(reject));
-        // }
-        //
-        // function progressCallback(customers) {
-        //     // render progress
-        //     console.log(`${customers.length} loaded`);
-        // }
-        //
-        // getCustomers(progressCallback)
-        //     .then(customers => {
-        //         // all customers have been loaded
-        //         console.log(customers.map(p => p.display_name))
-        //     })
-        //     .catch(console.error);
     };
 
     render() {

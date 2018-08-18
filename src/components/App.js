@@ -132,9 +132,11 @@ class App extends Component {
 
         return (
           <div className="App">
+              {/* <marquee behavior="scroll" className="box"> */}
               <div className="box">
                   { this.state.customers ? <div className="inner-box">{customers}</div> : null }
               </div>
+              {/* </marquee> */}
           </div>
         );
     }

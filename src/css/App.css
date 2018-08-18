@@ -21,10 +21,12 @@
     -webkit-animation-iteration-count: infinite;
     /*-webkit-animation-direction: alternate;*/
     -webkit-animation-timing-function: linear;
+    animation: marquee 15s linear infinite;
 }
 
 .box:hover {
     -webkit-animation-play-state: paused;
+    animation-play-state: paused;
 }
 
 @-webkit-keyframes move {
